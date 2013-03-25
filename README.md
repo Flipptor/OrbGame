@@ -72,5 +72,5 @@ Later on -> save entire state when sleep<br>
 <br>
 Music and Sound:<br>
 8-bit?<br>
-Semi-emotional<br>
+Atmospheric<br>
 <br>
