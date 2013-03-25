@@ -1,5 +1,7 @@
 *.class
 
 # Package Files #
+*.dex
+*.apk
 *.war
 *.ear
