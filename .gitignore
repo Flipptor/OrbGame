@@ -1,7 +1,6 @@
 *.class
 
 # Package Files #
-*R.java*
 *.dex
 *.apk
 *.war
