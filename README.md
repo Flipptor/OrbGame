@@ -10,7 +10,7 @@ Accelerometer-controlled<br>
 Enemy ai<br>
 pickup credits -> upgrade credits & increased score<br>
 Buy abilities via in-game menu for credits<br>
-Svårighetsgrad ökar med total score<br>
+Difficulty increase with the total score<br>
 	-> Enemies grow faster, stronger and grow in numbers as game progress<br>
 Killing enemies gives score (+ credits if upgrade)<br>
 Score calculated by FinalScore + RemainingCredits <br>
