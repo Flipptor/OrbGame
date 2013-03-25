@@ -5,3 +5,5 @@
 *.apk
 *.war
 *.ear
+*/gen/
+jarlist.cache
