@@ -100,5 +100,10 @@ public class GameInput implements IGameInput {
 			return new Vector2(0, 0);
 		}
 	}
+	
+	@Override
+	public boolean touchIsDown() {
+		return input.isTouched();
+	}
 
 }

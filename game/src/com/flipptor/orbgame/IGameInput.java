@@ -47,4 +47,9 @@ public interface IGameInput {
 	 */
 	public Vector2 getShotVector();
 	
+	/**
+	 * @return True if touch is pressed down, false otherwise.
+	 */
+	public boolean touchIsDown();
+	
 }
