@@ -7,3 +7,5 @@
 *.ear
 */gen/
 jarlist.cache
+/bin/dexedLibs/*
+.metadata/*
