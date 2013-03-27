@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
  * An interface describing an input system for a player.
  * 
  */
-public interface InputSystem {
+public interface GameInput {
 	
 	public Vector2 getMovementVector();
 	
