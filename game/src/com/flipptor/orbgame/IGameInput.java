@@ -12,6 +12,12 @@ import com.badlogic.gdx.math.Vector2;
 public interface IGameInput {
 	
 	/**
+	 * Updates the input to calculate values.
+	 * Call this method before getting new input values.
+	 */
+	public void update();
+	
+	/**
 	 * @return A vector containing movement information with direction
 	 * and acceleration.
 	 */
@@ -39,6 +45,6 @@ public interface IGameInput {
 	 * Returns a null vector (null in the sense of both values are zero) if
 	 * the player is not shooting.
 	 */
-	public boolean getShotVector();
+	public Vector2 getShotVector();
 	
 }
