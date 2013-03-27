@@ -3,6 +3,13 @@ package com.flipptor.orbgame.definitions;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 
+/**
+ * 
+ * @author Viktor Anderling
+ *
+ * A singleton class for defining fixture of the player.
+ * 
+ */
 public class PlayerFixtureDef extends FixtureDef {
 
 	public PlayerFixtureDef INSTANCE = new PlayerFixtureDef();
