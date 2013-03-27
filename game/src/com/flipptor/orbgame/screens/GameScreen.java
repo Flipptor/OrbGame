@@ -1,21 +1,23 @@
 package com.flipptor.orbgame.screens;
 
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.physics.box2d.World;
 import com.flipptor.orbgame.OrbGame;
+import com.flipptor.orbgame.WorldRenderer;
 
 public class GameScreen implements Screen {
 	OrbGame game;
+	WorldRenderer renderer;
 	
 	public GameScreen(OrbGame game) {
 		this.game = game;
+		renderer = new WorldRenderer(game);
+		
 	}
 	
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
-		
+		renderer.render();
 	}
 
 	@Override
