@@ -18,12 +18,9 @@ public abstract class Entity {
 	
 	public Entity(World world, BodyDef bodyDef) {
 		body = world.createBody(bodyDef);
-		
 	}
 	
 	public Body getBody() {
 		return body;
-	}
-	
-	
+	}	
 }
