@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.World;
 public class PlayerEntity extends Entity{
 	
 	float health = 3;
-	
+	IGameInput input;
 	
 	public PlayerEntity(World world, BodyDef bodyDef) {
 		super(world, bodyDef);
