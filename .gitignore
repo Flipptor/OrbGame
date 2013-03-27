@@ -8,5 +8,6 @@
 */gen/
 jarlist.cache
 /bin/dexedLibs/*
+game-android/bin/dexedLibs/*
 .metadata/*
 resources.ap_
