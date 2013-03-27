@@ -21,6 +21,6 @@ public class OrbGame extends Game {
 	public void create() {
 		gameScreen = new GameScreen(this);
 		splashScreen = new SplashScreen(this);
-		setScreen(splashScreen);
+		setScreen(gameScreen);
 	}
 }
