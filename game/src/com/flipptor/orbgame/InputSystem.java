@@ -1,6 +1,6 @@
 package com.flipptor.orbgame;
 
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * 
@@ -11,11 +11,11 @@ import com.badlogic.gdx.math.Vector3;
  */
 public interface InputSystem {
 	
-	public Vector3 getMovementVector();
+	public Vector2 getMovementVector();
 	
 	public boolean isDashing();
 	
-	public Vector3 getDashVector();
+	public Vector2 getDashVector();
 	
 	public boolean isShooting();
 	
