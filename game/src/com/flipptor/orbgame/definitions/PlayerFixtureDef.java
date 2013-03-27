@@ -12,7 +12,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
  */
 public class PlayerFixtureDef extends FixtureDef {
 
-	public PlayerFixtureDef INSTANCE = new PlayerFixtureDef();
+	public static PlayerFixtureDef INSTANCE = new PlayerFixtureDef();
 	
 	private PlayerFixtureDef() {
 		// TODO set these variables to better values.
