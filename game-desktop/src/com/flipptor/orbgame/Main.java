@@ -17,6 +17,8 @@ public class Main {
 		cfg.useGL20 = true;
 		cfg.width = (int) width;
 		cfg.height = (int) height;
+		cfg.fullscreen = true;
+		cfg.resizable = false;
 		
 		
 		new LwjglApplication(new OrbGame(), cfg);
