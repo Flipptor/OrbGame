@@ -11,11 +11,11 @@ public class OrbGame extends Game {
 	private Screen ingameMenu;
 	private Screen gameOverScreen;
 	private Screen mainMenuScreen;
+	private Screen highscoreScreen;
 	
 	protected Screen splashScreen;
 	protected Screen gameScreen;
 	
-	private Screen highscoreScreen;
 	
 	@Override
 	public void create() {
