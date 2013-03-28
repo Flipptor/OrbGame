@@ -1,6 +1,7 @@
 package com.flipptor.orbgame;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -9,6 +10,8 @@ public class PlayerEntity extends Entity {
 	float health = 3;
 	IGameInput input;
 	Vector2 force;
+	
+	
 	private static final float MULTIPLIER = 10;
 	
 	public PlayerEntity(World world, BodyDef bodyDef) {

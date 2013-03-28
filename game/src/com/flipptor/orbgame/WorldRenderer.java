@@ -47,7 +47,7 @@ public class WorldRenderer {
 		handler = new RayHandler(world);
 		handler.setCombinedMatrix(camera.combined);
 		
-		light = new PointLight(handler, 40000, Color.GRAY, 50, p.body.getPosition().x, p.body.getPosition().y);
+		light = new PointLight(handler, 40000, Color.GRAY, 50, p.getBody().getPosition().x, p.getBody().getPosition().y);
 		
 	}
 	
