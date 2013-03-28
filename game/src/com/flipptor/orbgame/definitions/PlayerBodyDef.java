@@ -17,7 +17,7 @@ public class PlayerBodyDef extends BodyDef {
 		this.type = BodyType.DynamicBody;
 		this.allowSleep = false;
 		this.fixedRotation = true;
-		this.linearDamping = 0f;
+		this.linearDamping = 1f;
 		this.position.set(position);
 	}
 }

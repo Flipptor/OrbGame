@@ -18,7 +18,7 @@ public class PlayerFixtureDef extends FixtureDef {
 		// TODO set these variables to better values.
 		this.shape = new CircleShape();
 		this.shape.setRadius(1f);
-		this.density = 0;
+		this.density = 0.1f;
 		this.friction = 0;
 		this.restitution = 0;
 	}

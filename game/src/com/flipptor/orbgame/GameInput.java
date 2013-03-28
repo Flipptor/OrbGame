@@ -81,7 +81,7 @@ public class GameInput implements IGameInput {
 	@Override
 	public Vector2 getDashVector() {
 		if(dashing) {
-			return new Vector2(pressVector);
+			return new Vector2(pressVector).nor();
 		} else {
 			return new Vector2(0, 0);
 		}
@@ -95,7 +95,7 @@ public class GameInput implements IGameInput {
 	@Override
 	public Vector2 getShotVector() {
 		if(shooting) {
-			return new Vector2(pressVector);
+			return new Vector2(pressVector).nor();
 		} else {
 			return new Vector2(0, 0);
 		}
