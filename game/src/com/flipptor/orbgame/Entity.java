@@ -14,7 +14,7 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public abstract class Entity {
 	
-	public Body body;
+	private Body body;
 	
 	public Entity(World world, BodyDef bodyDef) {
 		body = world.createBody(bodyDef);
