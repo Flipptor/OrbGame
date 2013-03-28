@@ -73,6 +73,6 @@ public class WorldRenderer {
 	
 	public void createPlayer() {
 		p = new PlayerEntity(world, new PlayerBodyDef(new Vector2(width/2, height/2)));
-		p.body.createFixture(PlayerFixtureDef.INSTANCE);
+		p.getBody().createFixture(PlayerFixtureDef.INSTANCE);
 	}
 }

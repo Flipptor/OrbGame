@@ -24,11 +24,11 @@ public class EntityHandler {
 		creditList = new LinkedList<Entity>();
 		player = new PlayerEntity(world, 
 				new PlayerBodyDef(new Vector2(WIDTH/2, HEIGHT/2)));
-		player.body.createFixture(PlayerFixtureDef.INSTANCE);
+		player.getBody().createFixture(PlayerFixtureDef.INSTANCE);
 		
 		// TODO remove later.
 		enemyList.add(new EnemyEntity(world, new EnemyBodyDef(new Vector2(WIDTH*1.3f/2, HEIGHT*1.3f/2))));
-		enemyList.getFirst().body.createFixture(EnemyFixtures.MEDIUM.fixtureDef);
+		enemyList.getFirst().getBody().createFixture(EnemyFixtures.MEDIUM.fixtureDef);
 	}
 	
 	public void update() {

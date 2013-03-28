@@ -1,5 +1,7 @@
 package com.flipptor.orbgame;
 
+import box2dLight.PointLight;
+
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
@@ -15,6 +17,7 @@ import com.badlogic.gdx.physics.box2d.World;
 public abstract class Entity {
 	
 	private Body body;
+	private PointLight light;
 	
 	public Entity(World world, BodyDef bodyDef) {
 		body = world.createBody(bodyDef);

@@ -20,6 +20,7 @@ public class PlayerEntity extends Entity {
 		super(world, bodyDef);
 		// TODO Auto-generated constructor stub
 		input = new GameInput();
+		//TODO add light!
 	}
 	
 	public void update() {
@@ -27,11 +28,11 @@ public class PlayerEntity extends Entity {
 		movementForce = input.getMovementVector();
 		movementForce.set(movementForce.x*MOVEMENT_MULTIPLIER, 
 				movementForce.y*MOVEMENT_MULTIPLIER);
-		this.body.applyForceToCenter(movementForce);
+		this.getBody().applyForceToCenter(movementForce);
 		if(input.isDashing()) {
 			dashForce = input.getDashVector();
 			dashForce.set(dashForce.x*dashMultiplier, dashForce.y*dashMultiplier);
-			this.body.applyForceToCenter(dashForce);
+			this.getBody().applyForceToCenter(dashForce);
 		}
 	}
 }
