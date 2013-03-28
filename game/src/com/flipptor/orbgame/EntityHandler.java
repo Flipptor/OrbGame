@@ -19,16 +19,16 @@ public class EntityHandler {
 	private float dX, dY;
 	//private World world;
 	
-	EnemyEntity enemy;
-	
 	public EntityHandler(World world) {
 		enemyList = new LinkedList<Entity>();
 		creditList = new LinkedList<Entity>();
 		player = new PlayerEntity(world, 
 				new PlayerBodyDef(new Vector2(WIDTH/2, HEIGHT/2)));
 		player.body.createFixture(PlayerFixtureDef.INSTANCE);
-		enemy = new EnemyEntity(world, new EnemyBodyDef(new Vector2(WIDTH*1.3f/2, HEIGHT*1.3f/2)));
-		enemy.body.createFixture(EnemyFixtures.MEDIUM.fixtureDef);
+		
+		// TODO remove later.
+		enemyList.add(new EnemyEntity(world, new EnemyBodyDef(new Vector2(WIDTH*1.3f/2, HEIGHT*1.3f/2))));
+		enemyList.getFirst().body.createFixture(EnemyFixtures.MEDIUM.fixtureDef);
 	}
 	
 	public void update() {
@@ -41,8 +41,11 @@ public class EntityHandler {
 		dX = pos.x - WIDTH/2;
 		dY = pos.y - HEIGHT/2;
 		player.getBody().setTransform(WIDTH/2, HEIGHT/2, 0);
-		enemy.getBody().setTransform(enemy.getBody().getPosition().x - dX,
-				enemy.getBody().getPosition().y - dY, 0);
-		
+		for(Entity e : enemyList) {
+			e.move(-dX, -dY);
+		}
+		for(Entity e : creditList) {
+			e.move(-dX, -dY);
+		}
 	}
 }

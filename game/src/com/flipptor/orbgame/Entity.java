@@ -22,5 +22,10 @@ public abstract class Entity {
 	
 	public Body getBody() {
 		return body;
-	}	
+	}
+	
+	public void move(float dX, float dY) {
+		body.setTransform(body.getPosition().x + dX,
+				body.getPosition().y + dY, 0);
+	}
 }
