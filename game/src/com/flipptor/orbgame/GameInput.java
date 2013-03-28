@@ -54,7 +54,7 @@ public class GameInput implements IGameInput {
 	@Override
 	public Vector2 getMovementVector() {
 		if(gyroControl) {
-			return new Vector2(input.getRoll(), input.getPitch());
+			return new Vector2(input.getAccelerometerY(), -input.getAccelerometerX());
 		} else {
 			Vector2 vec = new Vector2(0, 0);
 			if(input.isKeyPressed(Keys.UP)) {
