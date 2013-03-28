@@ -9,7 +9,6 @@ import com.badlogic.gdx.math.Vector2;
 public class GameInput implements IGameInput {
 
 	private static final float SCREEN_HEIGHT = Gdx.graphics.getHeight();
-	//private static final float MAX_DOUBLE_TAP_DELAY = 0.5f;
 	private static final float MAX_FIRE_HOLD_DELAY = 0.5f;
 	private static final int MIN_SWIPE_LENGTH = 
 			Gdx.graphics.getHeight()*Gdx.graphics.getWidth()/8000;
@@ -64,29 +63,6 @@ public class GameInput implements IGameInput {
 				shooting = true;
 			}
 		} 
-		
-		
-//		if(input.justTouched()) {
-//			prevPressTime = currentPressTime;
-//			currentPressTime = Gdx.input.getCurrentEventTime();
-//			pressVector.x = input.getX() - (screenWidth/2);
-//			pressVector.y = (screenHeight/2) - input.getY();
-//			previouslyPressed = true;
-//		}
-//		if(input.isTouched()) {
-//			if(!previouslyPressed) {
-//				if(currentPressTime - prevPressTime <= MAX_DOUBLE_TAP_DELAY) {
-//					dashing = true;
-//					shooting = false;
-//				} else {
-//					dashing = false;
-//					shooting = true;
-//				}
-//			} else {
-//				dashing = false;
-//				shooting = false;
-//			}
-//		}
 	}
 	
 	@Override
