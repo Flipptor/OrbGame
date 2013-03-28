@@ -8,17 +8,24 @@ import com.badlogic.gdx.math.Vector2;
 
 public class GameInput implements IGameInput {
 
-	private final float screenWidth= Gdx.graphics.getWidth();
-	private final float screenHeight = Gdx.graphics.getHeight();
-	private static final float MAX_DOUBLE_TAP_DELAY = 0.5f;
+	private static final float SCREEN_HEIGHT = Gdx.graphics.getHeight();
+	//private static final float MAX_DOUBLE_TAP_DELAY = 0.5f;
+	private static final float MAX_FIRE_HOLD_DELAY = 0.5f;
+	private static final int MIN_SWIPE_LENGTH = 
+			Gdx.graphics.getHeight()*Gdx.graphics.getWidth()/8000;
 	private final Input input = Gdx.input;
 	
 	private boolean gyroControl = false;
-	private long prevPressTime = 0;
-	private long currentPressTime = 0;
+	
+	private long firstPressTime = 0;
+	private long lastPressTime = 0;
 	
 	/** Vector of press with origo in the center of the screen */
-	private Vector2 pressVector;
+	private Vector2 pressVector = new Vector2();
+	
+	private boolean previouslyPressed = false;
+	private Vector2 firstPressPosition = new Vector2();
+	private Vector2 lastPressPosition = new Vector2();
 	
 	private boolean dashing = false;
 	private boolean shooting = false;
@@ -26,29 +33,60 @@ public class GameInput implements IGameInput {
 	public GameInput() {
 		if(Gdx.app.getType() == ApplicationType.Android) {
 			gyroControl = true;
-		}
-		pressVector = new Vector2(0, 0);
-		
+		}		
 	}
 	
 	@Override
 	public void update() {
+		dashing = false;
+		shooting = false;
 		if(input.justTouched()) {
-			prevPressTime = currentPressTime;
-			currentPressTime = Gdx.input.getCurrentEventTime();
-			pressVector.x = input.getX() - (screenWidth/2);
-			pressVector.y = (screenHeight/2) - input.getY();
-			if(currentPressTime - prevPressTime <= MAX_DOUBLE_TAP_DELAY) {
+			previouslyPressed = true;
+			firstPressTime = input.getCurrentEventTime();
+			firstPressPosition.set(input.getX(), SCREEN_HEIGHT-input.getY());
+			lastPressPosition.set(input.getX(), SCREEN_HEIGHT-input.getY());
+			lastPressTime = input.getCurrentEventTime();
+		} else if(input.isTouched() && previouslyPressed) {
+			// is held down
+			lastPressPosition.set(input.getX(), SCREEN_HEIGHT-input.getY());
+			lastPressTime = input.getCurrentEventTime();
+		} else if(!input.isTouched() && previouslyPressed) {
+			// just released
+			previouslyPressed = false;
+			pressVector.set(lastPressPosition.x - firstPressPosition.x, 
+					lastPressPosition.y - firstPressPosition.y);
+			if(Math.sqrt(Math.pow(pressVector.x, 2) + 
+					Math.pow(pressVector.y, 2)) >= MIN_SWIPE_LENGTH) {
+				// large enough swipe.
 				dashing = true;
-				shooting = false;
-			} else {
-				dashing = false;
+			} else if(lastPressTime - firstPressTime <= MAX_FIRE_HOLD_DELAY) {
+				// short enough since first press
 				shooting = true;
 			}
-		} else {
-			dashing = false;
-			shooting = false;
-		}
+		} 
+		
+		
+//		if(input.justTouched()) {
+//			prevPressTime = currentPressTime;
+//			currentPressTime = Gdx.input.getCurrentEventTime();
+//			pressVector.x = input.getX() - (screenWidth/2);
+//			pressVector.y = (screenHeight/2) - input.getY();
+//			previouslyPressed = true;
+//		}
+//		if(input.isTouched()) {
+//			if(!previouslyPressed) {
+//				if(currentPressTime - prevPressTime <= MAX_DOUBLE_TAP_DELAY) {
+//					dashing = true;
+//					shooting = false;
+//				} else {
+//					dashing = false;
+//					shooting = true;
+//				}
+//			} else {
+//				dashing = false;
+//				shooting = false;
+//			}
+//		}
 	}
 	
 	@Override
