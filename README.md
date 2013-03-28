@@ -19,6 +19,7 @@ Score calculated by FinalScore + RemainingCredits <br>
 <br>
 Abilities:<br>
 dashing, different levels<br>
+	-> number of consecutive dashes<br>
 shooting, - || -, target-seeking?<br>
 enemy drops<br>
 more score per enemy<br>
