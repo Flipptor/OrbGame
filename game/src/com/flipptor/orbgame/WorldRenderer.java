@@ -24,6 +24,8 @@ public class WorldRenderer {
 	RayHandler handler;
 	PointLight light;
 	
+	EntityHandler entityHandler;
+	
 	Vector3 ppos;
 	PlayerEntity p;
 	
@@ -36,8 +38,8 @@ public class WorldRenderer {
 		
 		world = new World(new Vector2(0,0), false);
 		
-		createPlayer();
-		
+		//createPlayer();
+		entityHandler = new EntityHandler(world);
 		
 		camera = new OrthographicCamera(width, height);
 		camera.position.set(width*0.5f, height*0.5f, 0);
@@ -47,20 +49,22 @@ public class WorldRenderer {
 		handler = new RayHandler(world);
 		handler.setCombinedMatrix(camera.combined);
 		
-		light = new PointLight(handler, 40000, Color.GRAY, 50, p.getBody().getPosition().x, p.getBody().getPosition().y);
+		//light = new PointLight(handler, 40000, Color.GRAY, 50, p.getBody().getPosition().x, p.getBody().getPosition().y);
+		PointLight l = new PointLight(handler, 40000, Color.GRAY, 50, width/2, height/2);
 		
 	}
 	
 	public void render() {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		renderer.render(world, camera.combined);
-		renderer.setDrawBodies(false);
+		renderer.setDrawBodies(true);
 		handler.render();
 		
-		light.setPosition(p.body.getPosition());
+		//light.setPosition(p.body.getPosition());
 		
 		handler.update();
-		p.update();
+		//p.update();
+		entityHandler.update();
 		if(Gdx.input.isKeyPressed(Keys.ESCAPE)){
 			Gdx.app.exit();
 		}
