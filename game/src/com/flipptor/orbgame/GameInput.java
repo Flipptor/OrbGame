@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 public class GameInput implements IGameInput {
 
 	private static final float SCREEN_HEIGHT = Gdx.graphics.getHeight();
+	private static final float SCREEN_WIDTH = Gdx.graphics.getWidth();
 	private static final float MAX_FIRE_HOLD_DELAY = 0.5f;
 	private static final int MIN_SWIPE_LENGTH = 
 			Gdx.graphics.getHeight()*Gdx.graphics.getWidth()/8000;
@@ -19,8 +20,8 @@ public class GameInput implements IGameInput {
 	private long firstPressTime = 0;
 	private long lastPressTime = 0;
 	
-	/** Vector of press with origo in the center of the screen */
-	private Vector2 pressVector = new Vector2();
+	/** Vector of the swipe */
+	private Vector2 swipeVector = new Vector2();
 	
 	private boolean previouslyPressed = false;
 	private Vector2 firstPressPosition = new Vector2();
@@ -52,10 +53,10 @@ public class GameInput implements IGameInput {
 		} else if(!input.isTouched() && previouslyPressed) {
 			// just released
 			previouslyPressed = false;
-			pressVector.set(lastPressPosition.x - firstPressPosition.x, 
+			swipeVector.set(lastPressPosition.x - firstPressPosition.x, 
 					lastPressPosition.y - firstPressPosition.y);
-			if(Math.sqrt(Math.pow(pressVector.x, 2) + 
-					Math.pow(pressVector.y, 2)) >= MIN_SWIPE_LENGTH) {
+			if(Math.sqrt(Math.pow(swipeVector.x, 2) + 
+					Math.pow(swipeVector.y, 2)) >= MIN_SWIPE_LENGTH) {
 				// large enough swipe.
 				dashing = true;
 			} else if(lastPressTime - firstPressTime <= MAX_FIRE_HOLD_DELAY) {
@@ -95,7 +96,7 @@ public class GameInput implements IGameInput {
 	@Override
 	public Vector2 getDashVector() {
 		if(dashing) {
-			return new Vector2(pressVector).nor();
+			return new Vector2(swipeVector).nor();
 		} else {
 			return new Vector2(0, 0);
 		}
@@ -109,7 +110,8 @@ public class GameInput implements IGameInput {
 	@Override
 	public Vector2 getShotVector() {
 		if(shooting) {
-			return new Vector2(pressVector).nor();
+			return new Vector2(lastPressPosition.x - SCREEN_WIDTH/2, 
+					lastPressPosition.y - SCREEN_HEIGHT/2).nor();
 		} else {
 			return new Vector2(0, 0);
 		}
