@@ -31,8 +31,7 @@ public abstract class Entity {
 	public void move(float dX, float dY) {
 		float newX = body.getPosition().x + dX;
 		float newY = body.getPosition().y + dY;
-		body.setTransform(newX, newY, 0);
-		light.setPosition(newX, newY);
+		setPosition(newX, newY);
 	}
 	
 	public void setPosition(float x, float y) {
