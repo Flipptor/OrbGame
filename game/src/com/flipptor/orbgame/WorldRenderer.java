@@ -21,7 +21,7 @@ public class WorldRenderer {
 	OrbGame game;
 	float width, height;
 	Box2DDebugRenderer renderer;
-	RayHandler handler;
+	RayHandler rayHandler;
 	PointLight light;
 	
 	EntityHandler entityHandler;
@@ -39,18 +39,17 @@ public class WorldRenderer {
 		world = new World(new Vector2(0,0), false);
 		
 		//createPlayer();
-		entityHandler = new EntityHandler(world);
 		
 		camera = new OrthographicCamera(width, height);
 		camera.position.set(width*0.5f, height*0.5f, 0);
 		camera.update();
 		
 		renderer = new Box2DDebugRenderer();
-		handler = new RayHandler(world);
-		handler.setCombinedMatrix(camera.combined);
+		rayHandler = new RayHandler(world);
+		rayHandler.setCombinedMatrix(camera.combined);
 		
+		entityHandler = new EntityHandler(world, rayHandler);
 		//light = new PointLight(handler, 40000, Color.GRAY, 50, p.getBody().getPosition().x, p.getBody().getPosition().y);
-		PointLight l = new PointLight(handler, 40000, Color.GRAY, 50, width/2, height/2);
 		
 	}
 	
@@ -58,11 +57,11 @@ public class WorldRenderer {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		renderer.render(world, camera.combined);
 		renderer.setDrawBodies(true);
-		handler.render();
+		rayHandler.render();
 		
 		//light.setPosition(p.body.getPosition());
 		
-		handler.update();
+		rayHandler.update();
 		//p.update();
 		entityHandler.update();
 		if(Gdx.input.isKeyPressed(Keys.ESCAPE)){
@@ -71,8 +70,8 @@ public class WorldRenderer {
 		world.step(1/60f, 6, 2);
 	}
 	
-	public void createPlayer() {
-		p = new PlayerEntity(world, new PlayerBodyDef(new Vector2(width/2, height/2)));
-		p.getBody().createFixture(PlayerFixtureDef.INSTANCE);
-	}
+//	public void createPlayer() {
+//		p = new PlayerEntity(world, new PlayerBodyDef(new Vector2(width/2, height/2)));
+//		p.getBody().createFixture(PlayerFixtureDef.INSTANCE);
+//	}
 }

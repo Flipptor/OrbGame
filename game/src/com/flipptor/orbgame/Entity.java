@@ -19,8 +19,9 @@ public abstract class Entity {
 	private Body body;
 	private PointLight light;
 	
-	public Entity(World world, BodyDef bodyDef) {
+	public Entity(World world, BodyDef bodyDef, PointLight light) {
 		body = world.createBody(bodyDef);
+		this.light = light;
 	}
 	
 	public Body getBody() {
@@ -28,7 +29,14 @@ public abstract class Entity {
 	}
 	
 	public void move(float dX, float dY) {
-		body.setTransform(body.getPosition().x + dX,
-				body.getPosition().y + dY, 0);
+		float newX = body.getPosition().x + dX;
+		float newY = body.getPosition().y + dY;
+		body.setTransform(newX, newY, 0);
+		light.setPosition(newX, newY);
+	}
+	
+	public void setPosition(float x, float y) {
+		body.setTransform(x, y, 0);
+		light.setPosition(x, y);
 	}
 }

@@ -2,6 +2,8 @@ package com.flipptor.orbgame;
 
 import java.util.LinkedList;
 
+import box2dLight.RayHandler;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -17,17 +19,20 @@ public class EntityHandler {
 	private LinkedList<Entity> enemyList, creditList;
 	private PlayerEntity player;
 	private float dX, dY;
-	//private World world;
+	private final RayHandler rayHandler;
+	private World world;
 	
-	public EntityHandler(World world) {
+	public EntityHandler(World world, RayHandler rayHandler) {
+		this.rayHandler = rayHandler;
+		this.world = world;
 		enemyList = new LinkedList<Entity>();
 		creditList = new LinkedList<Entity>();
 		player = new PlayerEntity(world, 
-				new PlayerBodyDef(new Vector2(WIDTH/2, HEIGHT/2)));
+				new PlayerBodyDef(new Vector2(WIDTH/2, HEIGHT/2)), rayHandler);
 		player.getBody().createFixture(PlayerFixtureDef.INSTANCE);
 		
 		// TODO remove later.
-		enemyList.add(new EnemyEntity(world, new EnemyBodyDef(new Vector2(WIDTH*1.3f/2, HEIGHT*1.3f/2))));
+		enemyList.add(new EnemyEntity(world, new EnemyBodyDef(new Vector2(WIDTH*1.3f/2, HEIGHT*1.3f/2)), rayHandler));
 		enemyList.getFirst().getBody().createFixture(EnemyFixtures.MEDIUM.fixtureDef);
 	}
 	
