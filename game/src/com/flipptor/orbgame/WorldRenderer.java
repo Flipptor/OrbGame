@@ -33,6 +33,8 @@ public class WorldRenderer {
 		camera.update();
 		
 		renderer = new Box2DDebugRenderer();
+		renderer.setDrawBodies(true);
+		
 		rayHandler = new RayHandler(world);
 		rayHandler.setCombinedMatrix(camera.combined);
 		
@@ -41,15 +43,17 @@ public class WorldRenderer {
 	}
 	
 	public void render() {
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		renderer.render(world, camera.combined);
-		renderer.setDrawBodies(true);
-		rayHandler.render();
-		rayHandler.update();
-		entityHandler.update();
 		if(Gdx.input.isKeyPressed(Keys.ESCAPE)){
 			Gdx.app.exit();
 		}
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		
+		renderer.render(world, camera.combined);
+		
+		rayHandler.update();
+		rayHandler.render();
+
 		world.step(1/60f, 6, 2);
+		entityHandler.update();
 	}
 }
