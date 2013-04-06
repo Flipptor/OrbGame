@@ -11,12 +11,10 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class PlayerEntity extends Entity {
 	
-	float health = 3;
-	IGameInput input;
-	Vector2 movementForce;
-	Vector2 dashForce;
-	
-	
+	private float health = 3;
+	private IGameInput input;
+	private Vector2 movementForce;
+	private Vector2 dashForce;
 	private static final float MOVEMENT_MULTIPLIER = 10;
 	private float dashMultiplier = 100000;
 	
