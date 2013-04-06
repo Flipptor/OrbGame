@@ -19,7 +19,7 @@ public class PlayerEntity extends Entity {
 	private float dashMultiplier = 100000;
 	
 	public PlayerEntity(World world, BodyDef bodyDef, RayHandler rayHandler) {
-		super(world, bodyDef, new PointLight(rayHandler, 40000, Color.GRAY, 50, 
+		super(world, bodyDef, new PointLight(rayHandler, Settings.numberOfRays, Color.GRAY, 50, 
 				bodyDef.position.x, bodyDef.position.y));
 		// TODO Auto-generated constructor stub
 		input = new GameInput();
