@@ -32,8 +32,14 @@ public class EntityHandler {
 		player.getBody().createFixture(PlayerFixtureDef.INSTANCE);
 		
 		// TODO remove later.
-		enemyList.add(new EnemyEntity(world, new EnemyBodyDef(new Vector2(WIDTH*1.3f/2, HEIGHT*1.3f/2)), rayHandler));
-		enemyList.getFirst().getBody().createFixture(EnemyFixtures.MEDIUM.fixtureDef);
+		EnemyEntity newEnemy = new EnemyEntity(world, new EnemyBodyDef(
+				new Vector2(WIDTH*1.3f/2, HEIGHT*1.3f/2)), rayHandler);
+		newEnemy.getBody().createFixture(EnemyFixtures.MEDIUM.fixtureDef);
+		enemyList.add(newEnemy);
+		newEnemy = new EnemyEntity(world, new EnemyBodyDef(
+				new Vector2(WIDTH*0.7f/2, HEIGHT*0.7f/2)), rayHandler);
+		newEnemy.getBody().createFixture(EnemyFixtures.MEDIUM.fixtureDef);
+		enemyList.add(newEnemy);
 	}
 	
 	public void update() {
