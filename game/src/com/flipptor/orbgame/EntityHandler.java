@@ -1,22 +1,34 @@
 package com.flipptor.orbgame;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import box2dLight.RayHandler;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
+import com.flipptor.orbgame.definitions.CreditBodyDef;
+import com.flipptor.orbgame.definitions.CreditFixtureDef;
 import com.flipptor.orbgame.definitions.EnemyBodyDef;
 import com.flipptor.orbgame.definitions.EnemyFixtures;
 import com.flipptor.orbgame.definitions.PlayerBodyDef;
 import com.flipptor.orbgame.definitions.PlayerFixtureDef;
 
-public class EntityHandler {
+public class EntityHandler implements ContactListener {
 	private static final float WIDTH = Gdx.graphics.getWidth()/10;
 	private static final float HEIGHT = Gdx.graphics.getHeight()/10;
 	
 	private LinkedList<Entity> enemyList, creditList;
+	
+	/**	A list containing all the contacts made since last world step */
+	private ArrayList<Contact> contactList;
+	
 	private PlayerEntity player;
 	private float dX, dY;
 	private final RayHandler rayHandler;
@@ -25,26 +37,74 @@ public class EntityHandler {
 	public EntityHandler(World world, RayHandler rayHandler) {
 		this.rayHandler = rayHandler;
 		this.world = world;
+		world.setContactListener(this);
 		enemyList = new LinkedList<Entity>();
 		creditList = new LinkedList<Entity>();
+		contactList = new ArrayList<Contact>();
+		
 		player = new PlayerEntity(world, 
 				new PlayerBodyDef(new Vector2(WIDTH/2, HEIGHT/2)), rayHandler);
 		player.getBody().createFixture(PlayerFixtureDef.INSTANCE);
 		
 		// TODO remove later.
-		EnemyEntity newEnemy = new EnemyEntity(world, new EnemyBodyDef(
+		Entity newEntity = new EnemyEntity(world, new EnemyBodyDef(
 				new Vector2(WIDTH*1.3f/2, HEIGHT*1.3f/2)), rayHandler);
-		newEnemy.getBody().createFixture(EnemyFixtures.MEDIUM.fixtureDef);
-		enemyList.add(newEnemy);
-		newEnemy = new EnemyEntity(world, new EnemyBodyDef(
+		newEntity.getBody().createFixture(EnemyFixtures.MEDIUM.fixtureDef);
+		enemyList.add(newEntity);
+		newEntity = new EnemyEntity(world, new EnemyBodyDef(
 				new Vector2(WIDTH*0.7f/2, HEIGHT*0.7f/2)), rayHandler);
-		newEnemy.getBody().createFixture(EnemyFixtures.MEDIUM.fixtureDef);
-		enemyList.add(newEnemy);
+		newEntity.getBody().createFixture(EnemyFixtures.MEDIUM.fixtureDef);
+		enemyList.add(newEntity);
+		newEntity = new CreditEntity(world, new CreditBodyDef(
+				new Vector2(WIDTH*1.3f/2, HEIGHT*1f/2)), rayHandler, 1);
+		newEntity.getBody().createFixture(new CreditFixtureDef());
+		creditList.add(newEntity);
 	}
 	
+	/**
+	 * Updates all entities by moving, handling contact of, spawning and
+	 * despawning entities.
+	 */
 	public void update() {
+		handleContacts();
 		moveEntities();
 		player.update();
+	}
+	
+	/**
+	 * Handles all contacts that has been made since last call.
+	 */
+	private void handleContacts() {
+		for(Contact contact : contactList) {
+			Fixture fixtureA = contact.getFixtureA(); // TODO maybe remove these two...
+			Fixture fixtureB = contact.getFixtureB();
+			if(fixtureA != null && fixtureB != null) {
+				Entity entityA = (Entity) fixtureA.getBody().getUserData();
+				Entity entityB = (Entity) fixtureB.getBody().getUserData();
+				
+				if(entityA instanceof PlayerEntity) {
+					playerColliding((PlayerEntity) entityA, entityB);
+				} else if(entityB instanceof PlayerEntity) {
+					playerColliding((PlayerEntity) entityB, entityA);
+				}
+				// TODO add more collisions for bullets etc.
+			}
+		}
+	}
+	
+	private void playerColliding(PlayerEntity player, Entity other) {
+		
+		// if player collides with a credit.
+		if(other instanceof CreditEntity) {
+			player.addCredits(((CreditEntity) other).getValue());
+			creditList.remove(other);
+			world.destroyBody(other.getBody());
+			other.disposeLight();
+		}
+		// if player collides with an enemy.
+		else if(other instanceof EnemyEntity) {
+			// TODO add collision logic between player and enemies.
+		}
 	}
 	
 	private void moveEntities() {
@@ -58,5 +118,25 @@ public class EntityHandler {
 		for(Entity e : creditList) {
 			e.move(-dX, -dY);
 		}
+	}
+
+	@Override
+	public void beginContact(Contact contact) {
+		contactList.add(contact);
+	}
+
+	@Override
+	public void endContact(Contact contact) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void preSolve(Contact contact, Manifold oldManifold) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void postSolve(Contact contact, ContactImpulse impulse) {
+		// TODO Auto-generated method stub
 	}
 }
