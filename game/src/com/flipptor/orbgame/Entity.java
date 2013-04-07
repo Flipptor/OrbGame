@@ -21,6 +21,7 @@ public abstract class Entity {
 	
 	public Entity(World world, BodyDef bodyDef, PointLight light) {
 		body = world.createBody(bodyDef);
+		body.setUserData(this);
 		this.light = light;
 	}
 	
