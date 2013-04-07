@@ -11,7 +11,7 @@ public class EnemyEntity extends Entity {
 
 	public EnemyEntity(World world, BodyDef bodyDef, RayHandler rayHandler) {
 		super(world, bodyDef, new PointLight(
-				rayHandler, Settings.numberOfRays, Color.GRAY, 50, bodyDef.position.x, bodyDef.position.y));
+				rayHandler, Settings.numberOfRays, Color.RED, 50, bodyDef.position.x, bodyDef.position.y));
 		// TODO Auto-generated constructor stub
 	}
 

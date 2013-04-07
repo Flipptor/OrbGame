@@ -14,7 +14,7 @@ public class CreditEntity extends Entity {
 	
 	public CreditEntity(World world, BodyDef bodyDef, RayHandler rayHandler, int value) {
 		super(world, bodyDef, new PointLight(rayHandler, Settings.numberOfRays, 
-				Color.GREEN, 50, bodyDef.position.x, bodyDef.position.y));
+				Color.GREEN, 20, bodyDef.position.x, bodyDef.position.y));
 	}
 	
 	/**
