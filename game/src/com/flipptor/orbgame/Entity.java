@@ -39,4 +39,8 @@ public abstract class Entity {
 		body.setTransform(x, y, 0);
 		light.setPosition(x, y);
 	}
+	
+	public void disposeLight() {
+		light.remove();
+	}
 }
