@@ -9,10 +9,18 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class CreditEntity extends Entity {
 
-	public CreditEntity(World world, BodyDef bodyDef, RayHandler rayHandler) {
+	/** The value of the credit */
+	private int value;
+	
+	public CreditEntity(World world, BodyDef bodyDef, RayHandler rayHandler, int value) {
 		super(world, bodyDef, new PointLight(rayHandler, Settings.numberOfRays, 
 				Color.GREEN, 50, bodyDef.position.x, bodyDef.position.y));
-		// TODO Auto-generated constructor stub
 	}
-
+	
+	/**
+	 * @return The value of this credit.
+	 */
+	public int getValue() {
+		return value;
+	}
 }
