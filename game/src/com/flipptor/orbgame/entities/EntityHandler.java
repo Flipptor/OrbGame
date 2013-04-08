@@ -21,6 +21,7 @@ import com.flipptor.orbgame.definitions.PlayerFixtureDef;
 public class EntityHandler implements ContactListener {
 	private static final float WIDTH = Gdx.graphics.getWidth()/Settings.worldToScreenScale;
 	private static final float HEIGHT = Gdx.graphics.getHeight()/Settings.worldToScreenScale;
+	public static final Vector2 PLAYER_POSITION = new Vector2(WIDTH/2, HEIGHT/2);
 	
 	private LinkedList<EnemyEntity> enemyList;
 	private LinkedList<CreditEntity> creditList;
@@ -41,8 +42,7 @@ public class EntityHandler implements ContactListener {
 		creditList = new LinkedList<CreditEntity>();
 		contactList = new ArrayList<Contact>();
 		
-		player = new PlayerEntity(world, 
-				new Vector2(WIDTH/2, HEIGHT/2), rayHandler);
+		player = new PlayerEntity(world, PLAYER_POSITION, rayHandler);
 		player.getBody().createFixture(PlayerFixtureDef.INSTANCE);
 		
 		// TODO remove later.
@@ -108,9 +108,9 @@ public class EntityHandler implements ContactListener {
 	
 	private void moveEntities() {
 		Vector2 pos = player.getBody().getPosition();
-		dX = pos.x - WIDTH/2;
-		dY = pos.y - HEIGHT/2;
-		player.getBody().setTransform(WIDTH/2, HEIGHT/2, 0);
+		dX = pos.x - PLAYER_POSITION.x;
+		dY = pos.y - PLAYER_POSITION.y;
+		player.getBody().setTransform(PLAYER_POSITION.x, PLAYER_POSITION.y, 0);
 		for(Entity e : enemyList) {
 			e.move(-dX, -dY);
 		}
