@@ -23,6 +23,7 @@ public abstract class Entity {
 		body = world.createBody(bodyDef);
 		body.setUserData(this);
 		this.light = light;
+		this.light.attachToBody(body, 0, 0);
 	}
 	
 	public Body getBody() {
@@ -37,7 +38,6 @@ public abstract class Entity {
 	
 	public void setPosition(float x, float y) {
 		body.setTransform(x, y, 0);
-		light.setPosition(x, y);
 	}
 	
 	public void disposeLight() {
