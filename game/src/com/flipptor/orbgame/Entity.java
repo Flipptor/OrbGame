@@ -43,4 +43,6 @@ public abstract class Entity {
 	public void disposeLight() {
 		light.remove();
 	}
+	
+	public abstract void update();		
 }

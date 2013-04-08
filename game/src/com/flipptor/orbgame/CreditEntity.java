@@ -24,4 +24,11 @@ public class CreditEntity extends Entity {
 	public int getValue() {
 		return value;
 	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }
