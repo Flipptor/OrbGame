@@ -1,4 +1,4 @@
-package com.flipptor.orbgame;
+package com.flipptor.orbgame.entities;
 
 import box2dLight.PointLight;
 

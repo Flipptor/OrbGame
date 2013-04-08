@@ -1,4 +1,4 @@
-package com.flipptor.orbgame;
+package com.flipptor.orbgame.entities;
 
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
@@ -6,6 +6,7 @@ import box2dLight.RayHandler;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.flipptor.orbgame.Settings;
 import com.flipptor.orbgame.definitions.CreditBodyDef;
 
 public class CreditEntity extends Entity {
