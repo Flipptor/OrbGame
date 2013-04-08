@@ -13,15 +13,17 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
+import com.flipptor.orbgame.Settings;
 import com.flipptor.orbgame.definitions.CreditFixtureDef;
 import com.flipptor.orbgame.definitions.EnemyTypes;
 import com.flipptor.orbgame.definitions.PlayerFixtureDef;
 
 public class EntityHandler implements ContactListener {
-	private static final float WIDTH = Gdx.graphics.getWidth()/10;
-	private static final float HEIGHT = Gdx.graphics.getHeight()/10;
+	private static final float WIDTH = Gdx.graphics.getWidth()/Settings.worldToScreenScale;
+	private static final float HEIGHT = Gdx.graphics.getHeight()/Settings.worldToScreenScale;
 	
-	private LinkedList<Entity> enemyList, creditList;
+	private LinkedList<EnemyEntity> enemyList;
+	private LinkedList<CreditEntity> creditList;
 	
 	/**	A list containing all the contacts made since last world step */
 	private ArrayList<Contact> contactList;
@@ -35,8 +37,8 @@ public class EntityHandler implements ContactListener {
 		this.rayHandler = rayHandler;
 		this.world = world;
 		world.setContactListener(this);
-		enemyList = new LinkedList<Entity>();
-		creditList = new LinkedList<Entity>();
+		enemyList = new LinkedList<EnemyEntity>();
+		creditList = new LinkedList<CreditEntity>();
 		contactList = new ArrayList<Contact>();
 		
 		player = new PlayerEntity(world, 
@@ -44,7 +46,7 @@ public class EntityHandler implements ContactListener {
 		player.getBody().createFixture(PlayerFixtureDef.INSTANCE);
 		
 		// TODO remove later.
-		Entity newEntity = new EnemyEntity(world, 
+		EnemyEntity newEntity = new EnemyEntity(world, 
 				new Vector2(WIDTH*1.3f/2, HEIGHT*1.3f/2), rayHandler);
 		newEntity.getBody().createFixture(EnemyTypes.MEDIUM.fixtureDef);
 		enemyList.add(newEntity);
@@ -52,10 +54,10 @@ public class EntityHandler implements ContactListener {
 				new Vector2(WIDTH*0.7f/2, HEIGHT*0.7f/2), rayHandler);
 		newEntity.getBody().createFixture(EnemyTypes.MEDIUM.fixtureDef);
 		enemyList.add(newEntity);
-		newEntity = new CreditEntity(world, 
+		CreditEntity newEntity2 = new CreditEntity(world, 
 				new Vector2(WIDTH*1.3f/2, HEIGHT*1f/2), rayHandler, 1);
-		newEntity.getBody().createFixture(new CreditFixtureDef());
-		creditList.add(newEntity);
+		newEntity2.getBody().createFixture(new CreditFixtureDef());
+		creditList.add(newEntity2);
 	}
 	
 	/**
@@ -65,7 +67,7 @@ public class EntityHandler implements ContactListener {
 	public void update() {
 		handleContacts();
 		moveEntities();
-		player.update();
+		updateEntities();
 	}
 	
 	/**
@@ -114,6 +116,13 @@ public class EntityHandler implements ContactListener {
 		}
 		for(Entity e : creditList) {
 			e.move(-dX, -dY);
+		}
+	}
+	
+	private void updateEntities() {
+		player.update();
+		for(EnemyEntity enemy : enemyList) {
+			enemy.update();
 		}
 	}
 

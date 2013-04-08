@@ -23,8 +23,8 @@ public class WorldRenderer {
 	public WorldRenderer(OrbGame game) {
 		this.game = game;
 		
-		width = Gdx.graphics.getWidth()/10;
-		height = Gdx.graphics.getHeight()/10;
+		width = Gdx.graphics.getWidth()/Settings.worldToScreenScale;
+		height = Gdx.graphics.getHeight()/Settings.worldToScreenScale;
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		
 		world = new World(new Vector2(0,0), false);
