@@ -7,13 +7,13 @@ package com.flipptor.orbgame.definitions;
  * An enumerator for defining fixtures of different enemies.
  *
  */
-public enum EnemyFixtures {
+public enum EnemyTypes {
 	
 	SMALL(1), MEDIUM(2), LARGE(3);
 	
 	public EnemyFixtureDef fixtureDef;
 	
-	private EnemyFixtures(float radius) {
+	private EnemyTypes(float radius) {
 		fixtureDef = new EnemyFixtureDef(radius);
 	}
 		

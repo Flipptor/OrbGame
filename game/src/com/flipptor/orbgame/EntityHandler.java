@@ -14,7 +14,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.flipptor.orbgame.definitions.CreditFixtureDef;
-import com.flipptor.orbgame.definitions.EnemyFixtures;
+import com.flipptor.orbgame.definitions.EnemyTypes;
 import com.flipptor.orbgame.definitions.PlayerFixtureDef;
 
 public class EntityHandler implements ContactListener {
@@ -46,11 +46,11 @@ public class EntityHandler implements ContactListener {
 		// TODO remove later.
 		Entity newEntity = new EnemyEntity(world, 
 				new Vector2(WIDTH*1.3f/2, HEIGHT*1.3f/2), rayHandler);
-		newEntity.getBody().createFixture(EnemyFixtures.MEDIUM.fixtureDef);
+		newEntity.getBody().createFixture(EnemyTypes.MEDIUM.fixtureDef);
 		enemyList.add(newEntity);
 		newEntity = new EnemyEntity(world, 
 				new Vector2(WIDTH*0.7f/2, HEIGHT*0.7f/2), rayHandler);
-		newEntity.getBody().createFixture(EnemyFixtures.MEDIUM.fixtureDef);
+		newEntity.getBody().createFixture(EnemyTypes.MEDIUM.fixtureDef);
 		enemyList.add(newEntity);
 		newEntity = new CreditEntity(world, 
 				new Vector2(WIDTH*1.3f/2, HEIGHT*1f/2), rayHandler, 1);
