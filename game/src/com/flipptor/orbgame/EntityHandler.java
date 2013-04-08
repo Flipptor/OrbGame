@@ -13,11 +13,8 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
-import com.flipptor.orbgame.definitions.CreditBodyDef;
 import com.flipptor.orbgame.definitions.CreditFixtureDef;
-import com.flipptor.orbgame.definitions.EnemyBodyDef;
 import com.flipptor.orbgame.definitions.EnemyFixtures;
-import com.flipptor.orbgame.definitions.PlayerBodyDef;
 import com.flipptor.orbgame.definitions.PlayerFixtureDef;
 
 public class EntityHandler implements ContactListener {
@@ -43,20 +40,20 @@ public class EntityHandler implements ContactListener {
 		contactList = new ArrayList<Contact>();
 		
 		player = new PlayerEntity(world, 
-				new PlayerBodyDef(new Vector2(WIDTH/2, HEIGHT/2)), rayHandler);
+				new Vector2(WIDTH/2, HEIGHT/2), rayHandler);
 		player.getBody().createFixture(PlayerFixtureDef.INSTANCE);
 		
 		// TODO remove later.
-		Entity newEntity = new EnemyEntity(world, new EnemyBodyDef(
-				new Vector2(WIDTH*1.3f/2, HEIGHT*1.3f/2)), rayHandler);
+		Entity newEntity = new EnemyEntity(world, 
+				new Vector2(WIDTH*1.3f/2, HEIGHT*1.3f/2), rayHandler);
 		newEntity.getBody().createFixture(EnemyFixtures.MEDIUM.fixtureDef);
 		enemyList.add(newEntity);
-		newEntity = new EnemyEntity(world, new EnemyBodyDef(
-				new Vector2(WIDTH*0.7f/2, HEIGHT*0.7f/2)), rayHandler);
+		newEntity = new EnemyEntity(world, 
+				new Vector2(WIDTH*0.7f/2, HEIGHT*0.7f/2), rayHandler);
 		newEntity.getBody().createFixture(EnemyFixtures.MEDIUM.fixtureDef);
 		enemyList.add(newEntity);
-		newEntity = new CreditEntity(world, new CreditBodyDef(
-				new Vector2(WIDTH*1.3f/2, HEIGHT*1f/2)), rayHandler, 1);
+		newEntity = new CreditEntity(world, 
+				new Vector2(WIDTH*1.3f/2, HEIGHT*1f/2), rayHandler, 1);
 		newEntity.getBody().createFixture(new CreditFixtureDef());
 		creditList.add(newEntity);
 	}
