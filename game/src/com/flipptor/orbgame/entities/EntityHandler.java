@@ -2,6 +2,7 @@ package com.flipptor.orbgame.entities;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import box2dLight.RayHandler;
 
@@ -18,7 +19,7 @@ import com.flipptor.orbgame.definitions.CreditFixtureDef;
 import com.flipptor.orbgame.definitions.EnemyTypes;
 import com.flipptor.orbgame.definitions.PlayerFixtureDef;
 
-public class EntityHandler implements ContactListener {
+public class EntityHandler {
 	private static final float WIDTH = Gdx.graphics.getWidth()/Settings.worldToScreenScale;
 	private static final float HEIGHT = Gdx.graphics.getHeight()/Settings.worldToScreenScale;
 	public static final Vector2 PLAYER_POSITION = new Vector2(WIDTH/2, HEIGHT/2);
@@ -27,7 +28,7 @@ public class EntityHandler implements ContactListener {
 	private LinkedList<CreditEntity> creditList;
 	
 	/**	A list containing all the contacts made since last world step */
-	private ArrayList<Contact> contactList;
+	private List<Contact> contactList;
 	
 	private PlayerEntity player;
 	private float dX, dY;
@@ -37,7 +38,7 @@ public class EntityHandler implements ContactListener {
 	public EntityHandler(World world, RayHandler rayHandler) {
 		this.rayHandler = rayHandler;
 		this.world = world;
-		world.setContactListener(this);
+		//world.setContactListener(this);
 		enemyList = new LinkedList<EnemyEntity>();
 		creditList = new LinkedList<CreditEntity>();
 		contactList = new ArrayList<Contact>();
@@ -74,6 +75,8 @@ public class EntityHandler implements ContactListener {
 	 * Handles all contacts that has been made since last call.
 	 */
 	private void handleContacts() {
+		contactList = world.getContactList();
+		
 		for(Contact contact : contactList) {
 			Fixture fixtureA = contact.getFixtureA(); // TODO maybe remove these two...
 			Fixture fixtureB = contact.getFixtureB();
@@ -95,6 +98,7 @@ public class EntityHandler implements ContactListener {
 		
 		// if player collides with a credit.
 		if(other instanceof CreditEntity) {
+			System.out.println("Collides with credit");
 			player.addCredits(((CreditEntity) other).getValue());
 			creditList.remove(other);
 			world.destroyBody(other.getBody());
@@ -124,25 +128,5 @@ public class EntityHandler implements ContactListener {
 		for(EnemyEntity enemy : enemyList) {
 			enemy.update();
 		}
-	}
-
-	@Override
-	public void beginContact(Contact contact) {
-		contactList.add(contact);
-	}
-
-	@Override
-	public void endContact(Contact contact) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void preSolve(Contact contact, Manifold oldManifold) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void postSolve(Contact contact, ContactImpulse impulse) {
-		// TODO Auto-generated method stub
 	}
 }
