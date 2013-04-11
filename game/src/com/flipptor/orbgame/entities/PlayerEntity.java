@@ -9,12 +9,13 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.flipptor.orbgame.GameInput;
 import com.flipptor.orbgame.IGameInput;
 import com.flipptor.orbgame.Settings;
+import com.flipptor.orbgame.Status;
 import com.flipptor.orbgame.definitions.PlayerBodyDef;
 
 public class PlayerEntity extends Entity {
 	
 	private int credits = 0;
-	private float health = 3;
+	private Status status;
 	private IGameInput input;
 	private Vector2 movementForce;
 	private Vector2 dashForce;
@@ -25,11 +26,13 @@ public class PlayerEntity extends Entity {
 		super(world, new PlayerBodyDef(position), 
 				new PointLight(rayHandler, Settings.numberOfRays, 
 						Color.GRAY, 50, position.x, position.y));
-		input = new GameInput();
+		this.input = new GameInput();
+		this.status = new Status();
 	}
 	
 	public void update() {
 		input.update();
+		status.update();
 		movementForce = input.getMovementVector();
 		movementForce.set(movementForce.x*MOVEMENT_MULTIPLIER, 
 				movementForce.y*MOVEMENT_MULTIPLIER);
@@ -74,34 +77,9 @@ public class PlayerEntity extends Entity {
 	}
 	
 	/**
-	 * Inflicts damage on the player.
-	 * 
-	 * @param damage The amount of damage to be inflicted.
+	 * @return The status of this player.
 	 */
-	public void takeDamage(float damage) {
-		health -= damage;
-	}
-	
-	/**
-	 * Heals an amount of damage from the player.
-	 * 
-	 * @param health The amount to be healed.
-	 */
-	public void healDamage(float health) {
-		this.health += health;
-	}
-	
-	/**
-	 * Heals all damage from the player, setting its health to full.
-	 */
-	public void healAllDamage() {
-		// TODO not able to implement yet...
-	}
-	
-	/**
-	 * @return The amount of health left of the player.
-	 */
-	public float getHealth() {
-		return health;
+	public Status getStatus() {
+		return this.status;
 	}
 }
