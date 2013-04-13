@@ -30,7 +30,7 @@ public class PlayerEntity extends Entity {
 	public PlayerEntity(World world, Vector2 position, RayHandler rayHandler) {
 		super(world, new PlayerBodyDef(position), 
 				new PointLight(rayHandler, Settings.numberOfRays, 
-						Color.GRAY, 50, position.x, position.y));
+						Color.GRAY, 20, position.x, position.y));
 		this.input = new GameInput();
 		this.status = new Status();
 	}
