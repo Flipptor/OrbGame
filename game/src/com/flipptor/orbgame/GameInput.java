@@ -73,16 +73,16 @@ public class GameInput implements IGameInput {
 		} else {
 			Vector2 vec = new Vector2(0, 0);
 			if(input.isKeyPressed(Keys.UP)) {
-				vec.y += 5;
+				vec.y += 3;
 			}
 			if(input.isKeyPressed(Keys.DOWN)) {
-				vec.y -= 5;
+				vec.y -= 3;
 			}
 			if(input.isKeyPressed(Keys.LEFT)) {
-				vec.x -= 5;
+				vec.x -= 3;
 			}
 			if(input.isKeyPressed(Keys.RIGHT)) {
-				vec.x += 5;
+				vec.x += 3;
 			}
 			return vec;
 		}
