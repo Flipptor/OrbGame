@@ -9,10 +9,7 @@ import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.flipptor.orbgame.Settings;
 import com.flipptor.orbgame.definitions.CreditFixtureDef;
@@ -23,6 +20,9 @@ public class EntityHandler {
 	private static final float WIDTH = Gdx.graphics.getWidth()/Settings.worldToScreenScale;
 	private static final float HEIGHT = Gdx.graphics.getHeight()/Settings.worldToScreenScale;
 	public static final Vector2 PLAYER_POSITION = new Vector2(WIDTH/2, HEIGHT/2);
+	private static final float MAX_ENTITY_DISTANCE = WIDTH*3f;
+	private static final int MAX_EXISTING_ENEMIES = 35;
+	private static final int MAX_EXISTING_CREDITS = 45;
 	
 	private LinkedList<EnemyEntity> enemyList;
 	private LinkedList<CreditEntity> creditList;
@@ -45,20 +45,6 @@ public class EntityHandler {
 		
 		player = new PlayerEntity(world, PLAYER_POSITION, rayHandler);
 		player.getBody().createFixture(PlayerFixtureDef.INSTANCE);
-		
-		// TODO remove later.
-		EnemyEntity newEntity = new EnemyEntity(world, 
-				new Vector2(WIDTH*1.3f/2, HEIGHT*1.3f/2), rayHandler);
-		newEntity.getBody().createFixture(EnemyTypes.MEDIUM.fixtureDef);
-		enemyList.add(newEntity);
-		newEntity = new EnemyEntity(world, 
-				new Vector2(WIDTH*0.7f/2, HEIGHT*0.7f/2), rayHandler);
-		newEntity.getBody().createFixture(EnemyTypes.MEDIUM.fixtureDef);
-		enemyList.add(newEntity);
-		CreditEntity newEntity2 = new CreditEntity(world, 
-				new Vector2(WIDTH*1.3f/2, HEIGHT*1f/2), rayHandler, 1);
-		newEntity2.getBody().createFixture(new CreditFixtureDef());
-		creditList.add(newEntity2);
 	}
 	
 	/**
@@ -69,6 +55,8 @@ public class EntityHandler {
 		handleContacts();
 		moveEntities();
 		updateEntities();
+		despawnEntities();
+		spawnEntities();
 	}
 	
 	/**
@@ -98,11 +86,9 @@ public class EntityHandler {
 		
 		// if player collides with a credit.
 		if(other instanceof CreditEntity) {
-			System.out.println("Collides with credit");
 			player.addCredits(((CreditEntity) other).getValue());
 			creditList.remove(other);
-			world.destroyBody(other.getBody());
-			other.disposeLight();
+			removeEntity(other);
 		}
 		// if player collides with an enemy.
 		else if(other instanceof EnemyEntity) {
@@ -128,5 +114,71 @@ public class EntityHandler {
 		for(EnemyEntity enemy : enemyList) {
 			enemy.update();
 		}
+	}
+	
+	private void despawnEntities() {
+		LinkedList<Entity> entitiesToBeRemoved = new LinkedList<Entity>();
+		for(EnemyEntity entity : enemyList) {
+			if(outOfRange(entity.getBody().getPosition(), 
+					MAX_ENTITY_DISTANCE)) {
+				entitiesToBeRemoved.add(entity);
+			}
+		}
+		for(CreditEntity entity : creditList) {
+			if(outOfRange(entity.getBody().getPosition(), 
+					MAX_ENTITY_DISTANCE)) {
+				entitiesToBeRemoved.add(entity);
+			}
+		}
+		for(Entity entity : entitiesToBeRemoved) {
+			removeEntity(entity);
+		}
+	}
+	
+	private boolean outOfRange(Vector2 position, float range) {
+		return (Math.abs(position.x - WIDTH/2) > range 
+				|| Math.abs(position.y - HEIGHT/2) > range);
+	}
+	
+	private void removeEntity(Entity entity) {
+		if(entity instanceof EnemyEntity) {
+			enemyList.remove(entity);
+		} else if(entity instanceof CreditEntity) {
+			creditList.remove(entity);
+		}
+		world.destroyBody(entity.getBody());
+		entity.disposeLight();
+	}
+	
+	private void spawnEntities() {
+		Entity newEntity;
+		while(enemyList.size() < MAX_EXISTING_ENEMIES) {
+			newEntity = new EnemyEntity(world, 
+					findValidSpawnpoint(), rayHandler);
+			newEntity.getBody().createFixture(EnemyTypes.MEDIUM.fixtureDef);
+			enemyList.add((EnemyEntity)newEntity);
+		}
+		while(creditList.size() < MAX_EXISTING_CREDITS) {
+			newEntity = new CreditEntity(world, 
+					findValidSpawnpoint(), rayHandler, 1);
+			newEntity.getBody().createFixture(new CreditFixtureDef());
+			creditList.add((CreditEntity)newEntity);
+		}
+	}
+
+	private Vector2 findValidSpawnpoint() {
+		Vector2 maxCoord = new Vector2(PLAYER_POSITION.x + WIDTH*0.75f, 
+				PLAYER_POSITION.y + HEIGHT*0.75f);
+		Vector2 minCoord = new Vector2(PLAYER_POSITION.x - WIDTH*0.75f, 
+				PLAYER_POSITION.y - HEIGHT*0.75f);
+		Vector2 coordinate = new Vector2(0, 0);
+		do {
+			coordinate.set(PLAYER_POSITION.x 
+					- MAX_ENTITY_DISTANCE*(1 - (float)Math.random()*2),
+					PLAYER_POSITION.y 
+					- MAX_ENTITY_DISTANCE*(1 - (float)Math.random()*2));
+		} while(coordinate.x < maxCoord.x && coordinate.x > minCoord.x 
+				&& coordinate.y < maxCoord.y && coordinate.y > minCoord.y);
+		return coordinate;
 	}
 }
