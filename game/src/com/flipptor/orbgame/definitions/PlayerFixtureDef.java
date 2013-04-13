@@ -20,6 +20,6 @@ public class PlayerFixtureDef extends FixtureDef {
 		this.shape.setRadius(1f);
 		this.density = 0.1f;
 		this.friction = 0;
-		this.restitution = 0;
+		this.restitution = 0.2f;
 	}
 }

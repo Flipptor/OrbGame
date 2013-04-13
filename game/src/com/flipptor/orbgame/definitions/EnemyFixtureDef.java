@@ -10,7 +10,7 @@ public class EnemyFixtureDef extends FixtureDef {
 		this.shape = new CircleShape();
 		this.density = 0;
 		this.friction = 0;
-		this.restitution = 0;
+		this.restitution = 0.2f;
 		this.shape.setRadius(radius);
 	}
 }
