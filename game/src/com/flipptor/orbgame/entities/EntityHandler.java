@@ -92,6 +92,7 @@ public class EntityHandler {
 		}
 		// if player collides with an enemy.
 		else if(other instanceof EnemyEntity) {
+			player.getStatus().inflictDamage(1);
 			// TODO add collision logic between player and enemies.
 		}
 	}
