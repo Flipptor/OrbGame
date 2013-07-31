@@ -174,7 +174,7 @@ public class Status {
 	/**
 	 * Sets the current dashing level to the given level.
 	 * 
-	 * @param dashingLevel The new firing level.
+	 * @param dashingLevel The new dashing level.
 	 */
 	public void setDashingLevel(int dashingLevel) {
 		this.dashingLevel = dashingLevel;
