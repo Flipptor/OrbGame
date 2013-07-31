@@ -65,6 +65,20 @@ public class Status {
 	}
 	
 	/**
+	 * Returns the health of the player in either float or integer form.
+	 * 
+	 * @param integer
+	 * @return The health of the player.
+	 */
+	public float getHealth(boolean integer) {
+		if(integer) {
+			return ((int)health);
+		} else {
+			return health;
+		}
+	}
+	
+	/**
 	 * Increases the entity's health a given amount. If the health where to 
 	 * exceed max health, health will be set to max health.
 	 * 

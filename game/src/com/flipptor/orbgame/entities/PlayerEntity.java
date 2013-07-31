@@ -33,6 +33,8 @@ public class PlayerEntity extends Entity {
 						Color.GRAY, 10, position.x, position.y));
 		this.input = new GameInput();
 		this.status = new Status();
+		this.status.setRegenerate(true);
+		this.status.setHealthRegen(0.0000000000000000001f);
 	}
 	
 	public void update() {

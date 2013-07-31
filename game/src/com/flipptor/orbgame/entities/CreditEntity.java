@@ -12,7 +12,7 @@ import com.flipptor.orbgame.definitions.CreditBodyDef;
 public class CreditEntity extends Entity {
 
 	/** The value of the credit */
-	private int value;
+	private int value = 1;
 	
 	public CreditEntity(World world, Vector2 position, RayHandler rayHandler, int value) {
 		super(world, new CreditBodyDef(position), new PointLight(rayHandler, Settings.numberOfRays, 

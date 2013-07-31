@@ -182,4 +182,8 @@ public class EntityHandler {
 				&& coordinate.y < maxCoord.y && coordinate.y > minCoord.y);
 		return coordinate;
 	}
+	
+	public PlayerEntity getPlayerEntity() {
+		return player;
+	}
 }
