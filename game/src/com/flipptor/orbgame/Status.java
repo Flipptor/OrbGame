@@ -1,5 +1,7 @@
 package com.flipptor.orbgame;
 
+import com.badlogic.gdx.Gdx;
+
 
 /**
  * A class containing the status for an arbitrary entity.
@@ -8,6 +10,9 @@ package com.flipptor.orbgame;
  *
  */
 public class Status {
+	
+	/** The time since the last hit occurred */
+	private float timeSinceLastHit = 0;
 	
 	/** The entity's current health. */
 	private float health = 1;
@@ -51,6 +56,8 @@ public class Status {
 			this.health += healthRegen*1000*(
 					System.currentTimeMillis()-lastRegTime);
 		}
+		timeSinceLastHit += Gdx.graphics.getDeltaTime();
+		System.out.println(timeSinceLastHit);
 	}
 	
 	/**
@@ -98,8 +105,9 @@ public class Status {
 	 * @param damage The amount of damage to be inflicted.
 	 */
 	public void inflictDamage(float damage) {
-		if(!isInvincible) {
+		if(!isInvincible && timeSinceLastHit > 1) {
 			health -= damage;
+			timeSinceLastHit = 0;
 		}
 		if(health <= 0) {
 			isDead = true;
